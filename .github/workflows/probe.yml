@@ -1,0 +1,45 @@
+name: probe
+
+# Probe every 5 minutes and commit the result back to data/status.json.
+# Runs on GitHub's infrastructure — completely independent of the VPS being
+# probed, so a VPS outage cannot take this page down with it.
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/probe.yml"
+      - "scripts/probe.mjs"
+
+# Permissions to write back to the repo.
+permissions:
+  contents: write
+
+concurrency:
+  group: probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Probe endpoints
+        run: node scripts/probe.mjs
+
+      - name: Commit if changed
+        run: |
+          if [[ -z "$(git status --porcelain data/status.json)" ]]; then
+            echo "no change"
+            exit 0
+          fi
+          git config user.name  "orchao-status-bot"
+          git config user.email "orchao-status-bot@users.noreply.github.com"
+          git add data/status.json
+          git commit -m "probe: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push

@@ -1,0 +1,7 @@
+{
+  "updatedAt": null,
+  "services": {
+    "web": { "current": null, "history": [] },
+    "api": { "current": null, "history": [] }
+  }
+}

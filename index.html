@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orchao Status</title>
+  <meta name="description" content="Current operational status of orchao.com and api.orchao.com.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%232D6A4F'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #F7F5EE;
+      --paper: #FFFFFF;
+      --ink: #0F1E1A;
+      --ink-soft: #2A3B36;
+      --slate: #5F6B65;
+      --rule: #E4DFD1;
+      --rule-soft: #EEE9DB;
+      --brand: #2D6A4F;
+      --brand-deep: #1E4A36;
+      --saffron: #B8763A;
+      --red: #B34D3D;
+      --good-bg: #E9F0EB;
+      --warn-bg: #F5EBD9;
+      --crit-bg: #F1E1DE;
+      color-scheme: light dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0D1815; --paper: #131F1B; --ink: #EFEAD9; --ink-soft: #C8C0AA;
+        --slate: #9A9585; --rule: #22302B; --rule-soft: #1B2723;
+        --brand: #4E9A78; --brand-deep: #6BB394;
+        --saffron: #D89848; --red: #D46B5B;
+        --good-bg: #17251F; --warn-bg: #24201A; --crit-bg: #251A19;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0D1815; --paper: #131F1B; --ink: #EFEAD9; --ink-soft: #C8C0AA;
+      --slate: #9A9585; --rule: #22302B; --rule-soft: #1B2723;
+      --brand: #4E9A78; --brand-deep: #6BB394;
+      --saffron: #D89848; --red: #D46B5B;
+      --good-bg: #17251F; --warn-bg: #24201A; --crit-bg: #251A19;
+    }
+    :root[data-theme="light"] {
+      --bg: #F7F5EE; --paper: #FFFFFF; --ink: #0F1E1A; --ink-soft: #2A3B36;
+      --slate: #5F6B65; --rule: #E4DFD1; --rule-soft: #EEE9DB;
+      --brand: #2D6A4F; --brand-deep: #1E4A36;
+      --saffron: #B8763A; --red: #B34D3D;
+      --good-bg: #E9F0EB; --warn-bg: #F5EBD9; --crit-bg: #F1E1DE;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 40px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .brand {
+      font-family: "Fraunces", "Georgia", serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .brand::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--brand);
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    header .updated {
+      font-size: 11.5px;
+      color: var(--slate);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+    }
+
+    /* Hero — the one-glance answer */
+    .hero {
+      padding: 44px 32px 40px;
+      border-radius: 12px;
+      background: var(--good-bg);
+      border: 1px solid color-mix(in oklab, var(--brand) 22%, transparent);
+      text-align: center;
+      margin-bottom: 40px;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    .hero.degraded { background: var(--warn-bg); border-color: color-mix(in oklab, var(--saffron) 30%, transparent); }
+    .hero.outage   { background: var(--crit-bg); border-color: color-mix(in oklab, var(--red) 30%, transparent); }
+
+    .hero .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--brand);
+      display: inline-block;
+      margin-right: 12px;
+      vertical-align: middle;
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand) 18%, transparent);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    .hero.degraded .dot { background: var(--saffron); box-shadow: 0 0 0 4px color-mix(in oklab, var(--saffron) 20%, transparent); }
+    .hero.outage   .dot { background: var(--red);     box-shadow: 0 0 0 4px color-mix(in oklab, var(--red) 20%, transparent); }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px color-mix(in oklab, currentColor 18%, transparent); }
+      50%      { box-shadow: 0 0 0 8px color-mix(in oklab, currentColor 8%,  transparent); }
+    }
+
+    .hero h1 {
+      font-family: "Fraunces", "Georgia", serif;
+      font-size: 30px;
+      font-weight: 500;
+      margin: 0;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      text-wrap: balance;
+    }
+    .hero p {
+      margin: 10px 0 0;
+      font-size: 13px;
+      color: var(--slate);
+      font-variant-numeric: tabular-nums;
+    }
+    @media (max-width: 520px) {
+      .hero { padding: 32px 20px 30px; }
+      .hero h1 { font-size: 24px; }
+    }
+
+    /* Services grid */
+    section h2 {
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--slate);
+      font-weight: 700;
+      margin: 40px 0 16px;
+    }
+
+    .services {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .svc {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 20px 22px 18px;
+    }
+    .svc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .svc-name {
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .svc-name .n-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--brand);
+      flex-shrink: 0;
+    }
+    .svc.degraded .n-dot { background: var(--saffron); }
+    .svc.outage .n-dot   { background: var(--red); }
+    .svc-name .n-host {
+      font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+      font-size: 11.5px;
+      color: var(--slate);
+      font-weight: 500;
+    }
+    .svc-state {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+    .svc.degraded .svc-state { color: var(--saffron); }
+    .svc.outage .svc-state   { color: var(--red); }
+
+    /* 90-day sparkline bar chart */
+    .sparkline {
+      display: flex;
+      gap: 2px;
+      height: 32px;
+      align-items: stretch;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+    .sparkline .bar {
+      flex: 1;
+      background: var(--brand);
+      border-radius: 1.5px;
+      opacity: 0.85;
+      min-width: 2px;
+      transition: opacity 0.2s ease;
+      cursor: default;
+    }
+    .sparkline .bar:hover { opacity: 1; }
+    .sparkline .bar.deg { background: var(--saffron); }
+    .sparkline .bar.out { background: var(--red); }
+    .sparkline .bar.nodata { background: var(--rule); opacity: 0.5; }
+
+    .sparkline-legend {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 10.5px;
+      color: var(--slate);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.03em;
+    }
+    .sparkline-legend .uptime {
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11.5px;
+      color: var(--slate);
+    }
+    footer a { color: var(--slate); text-decoration: none; border-bottom: 1px dotted var(--slate); }
+    footer a:hover { color: var(--ink); }
+
+    /* Loading / error states */
+    .msg {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--slate);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="https://orchao.com">Orchao</a>
+      <div class="updated" id="last-check">Loading…</div>
+    </header>
+
+    <div class="hero" id="hero">
+      <span class="dot"></span>
+      <h1 id="hero-headline">Checking status…</h1>
+      <p id="hero-sub">One moment.</p>
+    </div>
+
+    <section>
+      <h2>Components</h2>
+      <div class="services" id="services">
+        <div class="msg">Loading component status…</div>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        Automated checks every 5 minutes via GitHub Actions.<br>
+        Independently hosted on GitHub Pages.
+      </div>
+      <div style="text-align: right;">
+        <a href="https://orchao.com">orchao.com</a> ·
+        <a href="https://api.orchao.com">api.orchao.com</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const SERVICES = [
+      { key: "web", name: "Public site", host: "orchao.com" },
+      { key: "api", name: "API",         host: "api.orchao.com/health" }
+    ];
+    const DAYS = 90;
+
+    async function load() {
+      try {
+        const res = await fetch("data/status.json?t=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("no data");
+        return await res.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function fmtRel(iso) {
+      if (!iso) return "—";
+      const s = Math.max(0, Math.floor((Date.now() - Date.parse(iso)) / 1000));
+      if (s < 60) return s + "s ago";
+      if (s < 3600) return Math.floor(s / 60) + "m ago";
+      if (s < 86400) return Math.floor(s / 3600) + "h ago";
+      return Math.floor(s / 86400) + "d ago";
+    }
+
+    function overallState(services) {
+      let anyOutage = false, anyDegraded = false;
+      for (const s of Object.values(services)) {
+        if (s.current === "outage") anyOutage = true;
+        else if (s.current !== "operational") anyDegraded = true;
+      }
+      if (anyOutage)   return "outage";
+      if (anyDegraded) return "degraded";
+      return "operational";
+    }
+
+    function render(data) {
+      const container = document.getElementById("services");
+      const hero      = document.getElementById("hero");
+      const heroH     = document.getElementById("hero-headline");
+      const heroS     = document.getElementById("hero-sub");
+      const lastCheck = document.getElementById("last-check");
+
+      if (!data || !data.services) {
+        heroH.textContent = "Status data unavailable";
+        heroS.textContent = "The status feed has not yet been populated. Checks will begin publishing shortly after this page goes live.";
+        container.innerHTML = "";
+        return;
+      }
+
+      lastCheck.textContent = "Last check · " + fmtRel(data.updatedAt);
+
+      const state = overallState(data.services);
+      hero.classList.remove("degraded", "outage");
+      if (state === "outage") {
+        hero.classList.add("outage");
+        heroH.textContent = "Some systems are experiencing an outage";
+        heroS.textContent = "Our team is investigating. Follow @orchao_status or email support@orchao.com for updates.";
+      } else if (state === "degraded") {
+        hero.classList.add("degraded");
+        heroH.textContent = "Some systems are running degraded";
+        heroS.textContent = "You may notice slower responses. We are looking into it.";
+      } else {
+        heroH.textContent = "All systems operational";
+        heroS.textContent = "Everything is running normally.";
+      }
+
+      container.innerHTML = "";
+      for (const svc of SERVICES) {
+        const s = data.services[svc.key] || {};
+        const history = Array.isArray(s.history) ? s.history : [];
+        const el = document.createElement("div");
+        el.className = "svc" + (s.current === "outage" ? " outage" : (s.current === "degraded" ? " degraded" : ""));
+
+        const stateLabel = s.current === "outage" ? "Outage"
+                         : s.current === "degraded" ? "Degraded"
+                         : s.current === "operational" ? "Operational"
+                         : "No data";
+
+        // 90-day sparkline
+        const bars = [];
+        const padCount = DAYS - history.length;
+        for (let i = 0; i < padCount; i++) bars.push(`<div class="bar nodata"></div>`);
+        for (const d of history) {
+          const cls = d.state === "outage" ? "out" : d.state === "degraded" ? "deg" : d.state === "operational" ? "" : "nodata";
+          const title = `${d.date} · ${d.state ?? "no data"}`;
+          bars.push(`<div class="bar ${cls}" title="${title}"></div>`);
+        }
+
+        // Uptime calc from history
+        const known = history.filter(d => d.state);
+        const good  = known.filter(d => d.state === "operational").length;
+        const pct   = known.length ? (good / known.length) * 100 : null;
+
+        el.innerHTML = `
+          <div class="svc-row">
+            <div class="svc-name">
+              <span class="n-dot"></span>
+              <span>${svc.name}</span>
+              <span class="n-host">${svc.host}</span>
+            </div>
+            <div class="svc-state">${stateLabel}</div>
+          </div>
+          <div class="sparkline">${bars.join("")}</div>
+          <div class="sparkline-legend">
+            <span>${DAYS} days ago</span>
+            <span class="uptime">${pct === null ? "Uptime — no data yet" : "Uptime · " + pct.toFixed(2) + "%"}</span>
+            <span>Today</span>
+          </div>
+        `;
+        container.appendChild(el);
+      }
+    }
+
+    (async () => {
+      const data = await load();
+      render(data);
+      // Refresh the page every 5 minutes to pick up new data commits.
+      setTimeout(() => location.reload(), 5 * 60 * 1000);
+    })();
+  </script>
+</body>
+</html>
