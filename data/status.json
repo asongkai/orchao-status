@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-07-26T16:15:32.234Z",
+  "updatedAt": "2026-07-26T17:27:02.869Z",
   "services": {
     "web": {
-      "current": "operational",
+      "current": "degraded",
       "history": [
         {
           "date": "2026-07-16",
@@ -46,12 +46,12 @@
         },
         {
           "date": "2026-07-26",
-          "state": "operational"
+          "state": "degraded"
         }
       ],
       "lastCheck": {
-        "at": "2026-07-26T16:15:32.234Z",
-        "ms": 1826,
+        "at": "2026-07-26T17:27:02.869Z",
+        "ms": 5496,
         "code": 200
       }
     },
@@ -104,8 +104,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-07-26T16:15:32.234Z",
-        "ms": 951,
+        "at": "2026-07-26T17:27:02.869Z",
+        "ms": 1083,
         "code": 200
       }
     }
