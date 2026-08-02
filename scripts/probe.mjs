@@ -12,7 +12,11 @@ import path from "node:path";
 
 const DATA_FILE = "data/status.json";
 const TIMEOUT_MS = 10_000;
-const DEGRADED_MS = 3_000;      // >3s counts as degraded, not outage
+// >5s counts as degraded. Raised from 3s (2026-08-02): a cold Next.js SSR slot
+// right after a blue-green deploy flip serves its first request in ~3-4s, which
+// users never notice — 3s flagged whole days degraded for nothing. A genuinely
+// slow page (>5s) still trips.
+const DEGRADED_MS = 5_000;
 const KEEP_DAYS = 90;
 
 const SERVICES = [
@@ -71,12 +75,27 @@ async function main() {
     bucket.current = result.state;
     bucket.lastCheck = { at: nowIso, ms: result.ms, code: result.code };
 
+    // 2-strike rule (2026-08-02): a bad state (degraded/outage) only counts
+    // toward the day's history if the PREVIOUS probe was also bad. One unlucky
+    // sample — a deploy flip, a reboot, a GitHub network hiccup — no longer
+    // tanks a whole day's uptime. Real outages span many probes, so they still
+    // register on the second consecutive hit. `operational` always counts
+    // immediately (recovery should show right away). The live banner
+    // (bucket.current) still reflects the raw latest probe.
+    const prevRaw = bucket.lastRawState ?? "operational";
+    bucket.lastRawState = result.state;
+
+    const confirmed =
+      result.state === "operational" || prevRaw !== "operational"
+        ? result.state // operational, or 2nd consecutive bad → count it
+        : "operational"; // first bad probe → don't tank the day yet
+
     // Update today's history entry (worst-of-day rollup).
     const last = bucket.history[bucket.history.length - 1];
     if (last?.date === today) {
-      last.state = rollup(last.state, result.state);
+      last.state = rollup(last.state, confirmed);
     } else {
-      bucket.history.push({ date: today, state: result.state });
+      bucket.history.push({ date: today, state: confirmed });
     }
 
     // Keep only the last KEEP_DAYS distinct calendar days.
