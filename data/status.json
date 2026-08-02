@@ -74,7 +74,7 @@
         },
         {
           "date": "2026-08-02",
-          "state": "degraded"
+          "state": "operational"
         }
       ],
       "lastCheck": {
