@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T14:06:58.427Z",
+  "updatedAt": "2026-08-22T14:35:34.335Z",
   "services": {
     "web": {
       "current": "operational",
@@ -158,8 +158,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-08-22T14:06:58.427Z",
-        "ms": 1597,
+        "at": "2026-08-22T14:35:34.335Z",
+        "ms": 890,
         "code": 200
       },
       "lastRawState": "operational"
@@ -321,8 +321,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-08-22T14:06:58.427Z",
-        "ms": 871,
+        "at": "2026-08-22T14:35:34.335Z",
+        "ms": 709,
         "code": 200
       },
       "lastRawState": "operational"
