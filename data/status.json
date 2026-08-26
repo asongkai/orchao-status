@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T03:32:27.455Z",
+  "updatedAt": "2026-08-26T04:19:38.081Z",
   "services": {
     "web": {
       "current": "outage",
@@ -170,18 +170,18 @@
         },
         {
           "date": "2026-08-26",
-          "state": "operational"
+          "state": "outage"
         }
       ],
       "lastCheck": {
-        "at": "2026-08-26T03:32:27.455Z",
-        "ms": 10003,
+        "at": "2026-08-26T04:19:38.081Z",
+        "ms": 10001,
         "code": 0
       },
       "lastRawState": "outage"
     },
     "api": {
-      "current": "degraded",
+      "current": "operational",
       "history": [
         {
           "date": "2026-07-16",
@@ -353,11 +353,11 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-08-26T03:32:27.455Z",
-        "ms": 8790,
+        "at": "2026-08-26T04:19:38.081Z",
+        "ms": 2663,
         "code": 200
       },
-      "lastRawState": "degraded"
+      "lastRawState": "operational"
     }
   }
 }
