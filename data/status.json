@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-26T04:19:38.081Z",
+  "updatedAt": "2026-08-26T05:00:15.706Z",
   "services": {
     "web": {
-      "current": "outage",
+      "current": "operational",
       "history": [
         {
           "date": "2026-07-16",
@@ -174,11 +174,11 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-08-26T04:19:38.081Z",
-        "ms": 10001,
-        "code": 0
+        "at": "2026-08-26T05:00:15.706Z",
+        "ms": 1171,
+        "code": 200
       },
-      "lastRawState": "outage"
+      "lastRawState": "operational"
     },
     "api": {
       "current": "operational",
@@ -353,8 +353,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-08-26T04:19:38.081Z",
-        "ms": 2663,
+        "at": "2026-08-26T05:00:15.706Z",
+        "ms": 949,
         "code": 200
       },
       "lastRawState": "operational"
