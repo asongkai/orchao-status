@@ -1,13 +1,9 @@
 {
-  "updatedAt": "2026-10-13T23:03:04.633Z",
+  "updatedAt": "2026-10-14T01:49:25.689Z",
   "services": {
     "web": {
       "current": "outage",
       "history": [
-        {
-          "date": "2026-07-16",
-          "state": "outage"
-        },
         {
           "date": "2026-07-17",
           "state": "outage"
@@ -363,11 +359,15 @@
         {
           "date": "2026-10-13",
           "state": "outage"
+        },
+        {
+          "date": "2026-10-14",
+          "state": "outage"
         }
       ],
       "lastCheck": {
-        "at": "2026-10-13T23:03:04.633Z",
-        "ms": 209,
+        "at": "2026-10-14T01:49:25.689Z",
+        "ms": 250,
         "code": 403
       },
       "lastRawState": "outage"
@@ -376,10 +376,6 @@
       "current": "outage",
       "history": [
         {
-          "date": "2026-07-16",
-          "state": "outage"
-        },
-        {
           "date": "2026-07-17",
           "state": "outage"
         },
@@ -734,11 +730,15 @@
         {
           "date": "2026-10-13",
           "state": "outage"
+        },
+        {
+          "date": "2026-10-14",
+          "state": "outage"
         }
       ],
       "lastCheck": {
-        "at": "2026-10-13T23:03:04.633Z",
-        "ms": 126,
+        "at": "2026-10-14T01:49:25.689Z",
+        "ms": 166,
         "code": 403
       },
       "lastRawState": "outage"
