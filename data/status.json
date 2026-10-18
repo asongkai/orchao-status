@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T16:31:11.001Z",
+  "updatedAt": "2026-10-18T18:51:23.547Z",
   "services": {
     "web": {
       "current": "outage",
@@ -366,8 +366,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-10-18T16:31:11.001Z",
-        "ms": 600,
+        "at": "2026-10-18T18:51:23.547Z",
+        "ms": 128,
         "code": 403
       },
       "lastRawState": "outage"
@@ -737,8 +737,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-10-18T16:31:11.001Z",
-        "ms": 365,
+        "at": "2026-10-18T18:51:23.547Z",
+        "ms": 77,
         "code": 403
       },
       "lastRawState": "outage"
