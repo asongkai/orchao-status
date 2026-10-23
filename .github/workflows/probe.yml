@@ -31,6 +31,8 @@ jobs:
 
       - name: Probe endpoints
         run: node scripts/probe.mjs
+        env:
+          STATUS_PROBE_KEY: ${{ secrets.STATUS_PROBE_KEY }}
 
       - name: Commit if changed
         run: |

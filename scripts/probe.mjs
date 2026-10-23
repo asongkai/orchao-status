@@ -32,7 +32,13 @@ async function probeOne(svc) {
     const res = await fetch(svc.url, {
       redirect: "follow",
       signal: controller.signal,
-      headers: { "user-agent": "orchao-status-probe/1.0" },
+      // Cloudflare blocks GitHub's datacenter IPs as bots (403 since late
+      // Sept 2026). A WAF "Skip" rule matches this secret header, so only
+      // our probe gets through. Set STATUS_PROBE_KEY as a repo secret.
+      headers: {
+        "user-agent": "orchao-status-probe/1.0",
+        ...(process.env.STATUS_PROBE_KEY ? { "x-orchao-status-probe": process.env.STATUS_PROBE_KEY } : {}),
+      },
     });
     const ms = Date.now() - started;
     if (res.status !== svc.expect) return { state: "outage",    ms, code: res.status };
