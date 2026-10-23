@@ -36,7 +36,7 @@ async function probeOne(svc) {
       // Sept 2026). A WAF "Skip" rule matches the secret below, so only
       // our probe gets through. Set STATUS_PROBE_KEY as a repo secret.
       // Free-plan rules can match User Agent but not custom headers, so the
-      // secret rides in the user agent.
+      // secret rides in the user agent (Cloudflare rule "Status probe").
       headers: {
         "user-agent": process.env.STATUS_PROBE_KEY
           ? `orchao-status-probe/1.0 ${process.env.STATUS_PROBE_KEY}`
