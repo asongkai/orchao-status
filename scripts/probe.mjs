@@ -33,11 +33,14 @@ async function probeOne(svc) {
       redirect: "follow",
       signal: controller.signal,
       // Cloudflare blocks GitHub's datacenter IPs as bots (403 since late
-      // Sept 2026). A WAF "Skip" rule matches this secret header, so only
+      // Sept 2026). A WAF "Skip" rule matches the secret below, so only
       // our probe gets through. Set STATUS_PROBE_KEY as a repo secret.
+      // Free-plan rules can match User Agent but not custom headers, so the
+      // secret rides in the user agent.
       headers: {
-        "user-agent": "orchao-status-probe/1.0",
-        ...(process.env.STATUS_PROBE_KEY ? { "x-orchao-status-probe": process.env.STATUS_PROBE_KEY } : {}),
+        "user-agent": process.env.STATUS_PROBE_KEY
+          ? `orchao-status-probe/1.0 ${process.env.STATUS_PROBE_KEY}`
+          : "orchao-status-probe/1.0",
       },
     });
     const ms = Date.now() - started;
