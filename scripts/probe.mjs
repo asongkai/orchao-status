@@ -44,7 +44,10 @@ async function probeOne(svc) {
       },
     });
     const ms = Date.now() - started;
-    if (res.status !== svc.expect) return { state: "outage",    ms, code: res.status };
+    if (res.status !== svc.expect) {
+      // Why it failed: did we send the key, and did Cloudflare (not the origin) answer?
+      return { state: "outage", ms, code: res.status, keySent: !!process.env.STATUS_PROBE_KEY, cfMitigated: res.headers.get("cf-mitigated"), server: res.headers.get("server") };
+    }
     if (ms > DEGRADED_MS)          return { state: "degraded",  ms, code: res.status };
     return { state: "operational", ms, code: res.status };
   } catch (err) {
