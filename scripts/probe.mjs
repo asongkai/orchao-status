@@ -85,7 +85,7 @@ async function main() {
     const bucket = doc.services[svc.key] ?? { current: null, history: [] };
 
     bucket.current = result.state;
-    bucket.lastCheck = { at: nowIso, ms: result.ms, code: result.code };
+    bucket.lastCheck = { at: nowIso, ms: result.ms, code: result.code, ...(result.keySent !== undefined ? { keySent: result.keySent, cfMitigated: result.cfMitigated, server: result.server } : {}) };
 
     // 2-strike rule (2026-08-02): a bad state (degraded/outage) only counts
     // toward the day's history if the PREVIOUS probe was also bad. One unlucky
