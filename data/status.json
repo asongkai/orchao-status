@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T04:24:00.696Z",
+  "updatedAt": "2026-10-24T08:59:21.464Z",
   "services": {
     "web": {
       "current": "outage",
@@ -366,8 +366,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-10-24T04:24:00.696Z",
-        "ms": 388,
+        "at": "2026-10-24T08:59:21.464Z",
+        "ms": 431,
         "code": 403,
         "keySent": true,
         "cfMitigated": "challenge",
@@ -740,8 +740,8 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-10-24T04:24:00.696Z",
-        "ms": 155,
+        "at": "2026-10-24T08:59:21.464Z",
+        "ms": 181,
         "code": 403,
         "keySent": true,
         "cfMitigated": "challenge",
