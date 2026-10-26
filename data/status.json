@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-26T06:58:16.511Z",
+  "updatedAt": "2026-10-26T14:05:23.749Z",
   "services": {
     "web": {
-      "current": "outage",
+      "current": "operational",
       "history": [
         {
           "date": "2026-07-29",
@@ -366,17 +366,14 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-10-26T06:58:16.511Z",
-        "ms": 154,
-        "code": 403,
-        "keySent": true,
-        "cfMitigated": "challenge",
-        "server": "cloudflare"
+        "at": "2026-10-26T14:05:23.749Z",
+        "ms": 1170,
+        "code": 200
       },
-      "lastRawState": "outage"
+      "lastRawState": "operational"
     },
     "api": {
-      "current": "outage",
+      "current": "operational",
       "history": [
         {
           "date": "2026-07-29",
@@ -740,14 +737,11 @@
         }
       ],
       "lastCheck": {
-        "at": "2026-10-26T06:58:16.511Z",
-        "ms": 83,
-        "code": 403,
-        "keySent": true,
-        "cfMitigated": "challenge",
-        "server": "cloudflare"
+        "at": "2026-10-26T14:05:23.749Z",
+        "ms": 876,
+        "code": 200
       },
-      "lastRawState": "outage"
+      "lastRawState": "operational"
     }
   }
 }
