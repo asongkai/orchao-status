@@ -1,13 +1,9 @@
 {
-  "updatedAt": "2026-11-03T21:44:56.717Z",
+  "updatedAt": "2026-11-04T01:42:08.518Z",
   "services": {
     "web": {
       "current": "operational",
       "history": [
-        {
-          "date": "2026-08-06",
-          "state": "operational"
-        },
         {
           "date": "2026-08-07",
           "state": "operational"
@@ -363,11 +359,15 @@
         {
           "date": "2026-11-03",
           "state": "operational"
+        },
+        {
+          "date": "2026-11-04",
+          "state": "operational"
         }
       ],
       "lastCheck": {
-        "at": "2026-11-03T21:44:56.717Z",
-        "ms": 1318,
+        "at": "2026-11-04T01:42:08.518Z",
+        "ms": 1273,
         "code": 200
       },
       "lastRawState": "operational"
@@ -375,10 +375,6 @@
     "api": {
       "current": "operational",
       "history": [
-        {
-          "date": "2026-08-06",
-          "state": "operational"
-        },
         {
           "date": "2026-08-07",
           "state": "operational"
@@ -734,11 +730,15 @@
         {
           "date": "2026-11-03",
           "state": "operational"
+        },
+        {
+          "date": "2026-11-04",
+          "state": "operational"
         }
       ],
       "lastCheck": {
-        "at": "2026-11-03T21:44:56.717Z",
-        "ms": 910,
+        "at": "2026-11-04T01:42:08.518Z",
+        "ms": 870,
         "code": 200
       },
       "lastRawState": "operational"
